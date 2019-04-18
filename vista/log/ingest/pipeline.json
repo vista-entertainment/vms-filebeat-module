@@ -1,0 +1,84 @@
+{
+  "description": "Pipeline for parsing Vista logs.",
+  "processors": [
+    {
+      "grok": {
+        "field": "message",
+        "ignore_missing": true,
+        "patterns": [
+          "^%{CSV_HEADER:vista.log.csvHeader}",
+          "^%{TIMESTAMP_ISO8601:vista.log.dateTime}|%{WORD:vista.log.level}|%{CORRELATION_ID:vista.log.correlationId}|%{CINEMA_ID:vista.log.cinemaId}|%{LOGGER_CLASS:vista.log.logger}|%{GREEDYDATA:vista.log.message}"
+        ],
+        "pattern_definitions": {
+          "CSV_HEADER": "^dateTime|level|correlationId|cinemaId|logger|message",
+          "CORRELATION_ID": "-|%{WORD}",
+          "CINEMA_ID": "[a-zA-Z0-9._-]+",
+          "LOGGER_CLASS": "[a-zA-Z0-9._-]+",
+          "GREEDYDATA": "(.|\t|\n)*"
+        }
+      }
+    },
+    {
+      "remove": {
+        "field": "message"
+      }
+    },
+    {
+      "log_level": {
+        "field": "vista.log.level",
+        "target_field": "log_level",
+        "ignore_failure": true
+      }
+    },
+    {
+      "correlationId": {
+        "field": "vista.log.correlationId",
+        "target_field": "correlation_id",
+        "ignore_failure": true
+      }
+    },
+    {
+      "cinemaId": {
+        "field": "vista.log.cinemaId",
+        "target_field": "cinema_id",
+        "ignore_failure": true
+      }
+    },
+    {
+      "logger_class": {
+        "field": "vista.log.logger",
+        "target_field": "logger_class",
+        "ignore_failure": true
+      }
+    },
+	{
+		"rename": {
+			"field": "@timestamp",
+			"target_field": "event.created"
+		}
+	},
+	{
+		"date": {
+			"field": "vista.log.dateTime",
+			"target_field": "@timestamp",
+			"formats": [
+			  "yyyy-MM-dd HH:mm:ss.SSS", "yyyy-MM-dd HH:mm:ss"
+			],
+			"ignore_failure": true
+		}
+	},
+	{
+		"remove": {
+			"field": "vista.log.dateTime"
+		}
+	}
+  ],
+  "on_failure": [
+    {
+      "set": {
+        "field": "error.message",
+        "value": "{{ _ingest.on_failure_message }}"
+      }
+    }
+  ]
+}

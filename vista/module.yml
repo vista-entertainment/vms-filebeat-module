@@ -1,0 +1,3 @@
+dashboards:
+- id: Filebeat-vista-overview-dashboard
+  file: Filebeat-vista-overview.json
