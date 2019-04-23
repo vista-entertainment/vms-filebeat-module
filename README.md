@@ -15,17 +15,17 @@ Ensure the config points to **modules.d** directory
     filebeat.config.modules:
       path: ${path.config}/modules.d/*.yml
 
-Copy the vista module folder inside **modules.d** to make it available to in Filebeat.
+Copy the vista module folder inside **modules** to make it available to in Filebeat.
 
-Copy the module configuration metadata vista.yaml inside **module** folder
+Copy the module configuration metadata vista.yaml inside **module.d** folder
 
 Enable the module:
 
-`.\filebeat.exe module enable vista`
+`.\filebeat.exe modules enable vista`
 
 ensure it is enabled with 
 
-`.\filebeat.exe module list`
+`.\filebeat.exe modules list`
 
 ### Setup the pipeline
 
