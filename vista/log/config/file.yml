@@ -5,6 +5,6 @@ paths:
 {{ end }}
 exclude_files: [".gz$"]
 multiline:
-  pattern: '^\[0-9]{4}-[0-9]{2}-[0-9]{2}'
-  negate: true
+  pattern: '^[[:space:]]+at'
+  negate: false
   match: after

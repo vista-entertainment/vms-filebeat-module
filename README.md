@@ -32,6 +32,14 @@ ensure it is enabled with
 `.\filebeat.exe setup --modules vista --pipelines`
 
 
+### Optional: Set the paths variableedit
+The examples here assume that the logs you’re harvesting are in the location expected for your OS and that the default behavior of Filebeat is appropriate for your environment.
+
+Each module and fileset has variables that you can set to change the default behavior of the module, including the paths where the module looks for log files. You can set the path in configuration or from the command line. For example:
+
+- module: vista
+  log:
+    var.paths: ["C:/ServiceFramework/*.log"] 
 
 ### Start filebeat 
 
@@ -41,5 +49,27 @@ via command line
 
 or as a service
 
+Start-Service filebeat
+
 ## How to setup a (minimal) ELK stack to test pipelines
 
+	version: '2.0'
+	services:
+	  elasticsearch:
+	    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+	    container_name: elasticsearch
+	    environment:
+	      - node.name=elasticsearch
+	      - discovery.type=single-node
+	    volumes:
+	      - /usr/share/elasticsearch/data
+	    ports:
+	      - 9200:9200
+	
+	  kibana:
+	    image: docker.elastic.co/kibana/kibana-oss:7.0.0
+	    ports:
+	      - "5601:5601"
+	    depends_on:
+	      - elasticsearch
+	
