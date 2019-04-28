@@ -8,4 +8,4 @@
     # Filebeat will choose the paths depending on your OS.
     #var.paths:
 
-    var.paths: ["C:/Vista/Log/*.log"]
+    var.paths: ["C:/Vista/Log/*/*.log"]
