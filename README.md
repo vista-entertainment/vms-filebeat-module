@@ -27,7 +27,7 @@ ensure it is enabled with
 
 `.\filebeat.exe modules list`
 
-### Setup the pipeline
+### Setup the pipeline (upload to ES)
 
 `.\filebeat.exe setup --modules vista --pipelines`
 

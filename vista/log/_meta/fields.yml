@@ -1,0 +1,28 @@
+- name: sf
+  description: Contains fields for the Vista Service Framework Services logs.
+  type: group
+  fields:
+    - name: log_cinemaId
+      type: keyword
+      description: >
+        Vista log cinemaId.
+    - name: log_correlationId
+      type: keyword
+      description: >
+        Vista log correlationId.
+    - name: log_format
+      type: keyword
+      description: >
+        Vista log format.
+    - name: log_level
+      type: keyword
+      description: >
+        Vista log level.
+    - name: log_logger
+      type: keyword
+      description: >
+        Vista log logger.
+    - name: log_message
+      type: text
+      description: >
+        Vista log message.

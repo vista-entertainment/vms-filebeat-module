@@ -1,13 +1,13 @@
 {
-  "description": "Pipeline for parsing Vista Software logs.",
+  "description": "Pipeline for parsing vista.sf Software logs.",
   "processors": [
     {
       "grok": {
         "field": "message",
         "ignore_missing": true,
         "patterns": [
-          "^%{CSV_HEADER:vista.log.csvHeader}",
-          "^%{TIMESTAMP_ISO8601:vista.log.dateTime}\\|%{LOG_LEVEL:vista.log.level}\\|%{CORRELATION_ID:vista.log.correlationId}\\|%{CINEMA_ID:vista.log.cinemaId}\\|%{LOGGER_CLASS:vista.log.logger}\\|%{GREEDYMULTILINE:vista.log.message}"
+          "^%{CSV_HEADER:vista.sf.log_csvHeader}",
+          "^%{TIMESTAMP_ISO8601:vista.sf.log_datetime}\\|%{LOG_LEVEL:vista.sf.log_level}\\|%{CORRELATION_ID:vista.sf.log_correlationId}\\|%{CINEMA_ID:vista.sf.log_cinemaId}\\|%{LOGGER_CLASS:vista.sf.log_logger}\\|%{GREEDYMULTILINE:vista.sf.log_message}"
         ],
         "pattern_definitions": {
           "CSV_HEADER": "^dateTime|level|correlationId|cinemaId|logger|message",
@@ -21,13 +21,13 @@
     },
     {
       "set": {
-        "field": "vista.log.format",
-        "value": "Vista"
+        "field": "vista.sf.log_format",
+        "value": "sf"
       }
     },
     {
       "uppercase": {
-        "field": "vista.log.level",
+        "field": "vista.sf.log_level",
         "ignore_missing": true
       }
     },
@@ -37,9 +37,20 @@
         "target_field": "event.created"
       }
     },
+	{
+		"remove": {
+			"field": "message"
+		}
+	},	
+    {
+      "rename": {
+        "field": "vista.sf.log_message",
+        "target_field": "message"
+      }
+    },	
     {
       "date": {
-        "field": "vista.log.dateTime",
+        "field": "vista.sf.log_datetime",
         "target_field": "@timestamp",
         "formats": [
           "ISO8601",

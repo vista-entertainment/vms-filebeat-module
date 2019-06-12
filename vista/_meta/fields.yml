@@ -1,0 +1,12 @@
+- key: vista
+  title: "vista"
+  description: >
+    Vista Module
+  release: beta
+  fields:
+    - name: vista
+      type: group
+      description: >
+        Fields from NATS logs.
+      fields:
+
