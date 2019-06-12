@@ -7,6 +7,6 @@
     - name: vista
       type: group
       description: >
-        Fields from NATS logs.
+        Fields from Vista Module logs.
       fields:
 
